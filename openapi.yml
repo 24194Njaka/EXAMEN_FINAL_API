@@ -21,7 +21,6 @@ paths:
 
   /cars:
     get:
-      summary: Get all cars
       responses:
         '200':
           description: Successful
@@ -32,7 +31,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Car'
     post:
-      summary: Create one or more cars
       requestBody:
         required: true
         content:
@@ -54,3 +52,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /cars/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Car identifier
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /cars/{id}/characteristics:
+    put:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Car identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Characteristic'
+      responses:
+        '200':
+          description: Characteristics updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
