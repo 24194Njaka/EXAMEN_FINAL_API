@@ -33,7 +33,6 @@ cars_db = []
 async def create_cars(cars: List[Car]):
 
     try:
-
         for car in cars:
             cars_db.append(car.dict())
 
