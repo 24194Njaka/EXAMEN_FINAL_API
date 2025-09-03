@@ -46,4 +46,50 @@ async def get_cars():
     return cars_db
 
 
+#  c
+
+@app.post("/cars", status_code=201)
+async def create_mob(cars: List[Car]):
+    try:
+
+        for car in cars:
+            cars_db.append(car.dict())
+
+        return {"message": f"Successfully created {len(cars)} car(s)", "cars": cars}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/cars")
+async def get_cars():
+    return cars_db
+
+ # ----d
+@app.get("/cars/{car_id}")
+async def get_car(car_id: str):
+    for car in cars_db:
+        if car["identifier"] == car_id:
+            return car
+    raise HTTPException(
+        status_code=404,
+        detail=f"Car with id {car_id} does not exist or was not found"
+    )
+
+
+# e --bonus---
+@app.put("/cars/{car_id}/characteristics", response_model=Car)
+async def update_car_characteristics(car_id: str, characteristics: Characteristic):
+    for car in cars_db:
+        if car["identifier"] == car_id:
+            car["characteristics"] = characteristics.dict()
+            return car
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"Car with id {car_id} does not exist or was not found"
+    )
+
+
+
+
+
 
