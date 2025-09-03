@@ -103,3 +103,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+components:
+  schemas:
+    Characteristic:
+      type: object
+      required:
+        - max_speed
+        - max_fuel_capacity
+      properties:
+        max_speed:
+          type: number
+          format: float
+          example: 180.5
+        max_fuel_capacity:
+          type: number
+          format: float
+          example: 60.0
+
+    Car:
+      type: object
+      required:
+        - identifier
+        - brand
+        - model
+        - characteristics
+      properties:
+        identifier:
+          type: string
+          example: "car1"
+        brand:
+          type: string
+          example: "Toyota"
+        model:
+          type: string
+          example: "Camry"
+        characteristics:
+          $ref: '#/components/schemas/Characteristic'
+
+    CreateCarsResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Successfully created 2 car(s)"
+        cars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Car'
+
